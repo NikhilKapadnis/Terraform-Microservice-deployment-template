@@ -1,0 +1,12 @@
+{
+  "name": "name-webapp",
+  "version": "1.0.0",
+  "description": "Simple Express app to collect user name",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
