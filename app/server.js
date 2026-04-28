@@ -64,7 +64,7 @@ app.post("/submit", (req, res) => {
   // Later we will store this name in RDS MySQL.
   res.send(`
     <h1>Hello Welcome, ${name}!</h1>
-    <p>Your name will later be stored in RDS MySQL.</p>
+    <p>Your name will later be stored in RDS MySQL in next stages .</p>
     <a href="/">Go back</a>
   `);
 });
