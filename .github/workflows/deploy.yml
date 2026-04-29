@@ -36,14 +36,19 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         run: terraform init
 
-      - name: Terraform Apply
+      # Step 1: Create only the ECR repo first
+      # IMPORTANT: change aws_ecr_repository.this if your Terraform resource has a different name
+      - name: Create ECR repository first
         working-directory: ${{ env.TF_DIR }}
-        run: terraform apply -auto-approve
+        run: |
+          terraform apply -auto-approve \
+            -target=aws_ecr_repository.this
 
       - name: Login to ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      # Step 2: Build and push image with GitHub SHA tag
       - name: Build and push Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -53,9 +58,11 @@ jobs:
           docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Force ECS deployment
+      # Step 3: Deploy ECS using the pushed image tag
+      - name: Terraform Apply ECS service
+        working-directory: ${{ env.TF_DIR }}
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          aws ecs update-service \
-            --cluster $ECS_CLUSTER \
-            --service $ECS_SERVICE \
-            --force-new-deployment
+          terraform apply -auto-approve \
+            -var="image_tag=$IMAGE_TAG"
