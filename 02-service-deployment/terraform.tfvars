@@ -1,16 +1,16 @@
 aws_region = "us-east-1"
 
-vpc_id = "vpc-08e2b925c62ae9cfe"
+vpc_id = "vpc-08ed0641672b935c7"
 
 private_subnet_ids = [
-  "subnet-09bf2a896bccb2dbf",
-  "subnet-058b43649e152e236",
+  "subnet-0ed22f0b505d5ef20",
+  "subnet-0c617ef2d3ae43572",
 ]
 
 ecs_cluster_name  = "nikhil-main-cluster"
-ecs_service_sg_id = "sg-02786d507af1a3d34"
+ecs_service_sg_id = "sg-0a813fdc90b1c207e"
 
-listener_arn = "arn:aws:elasticloadbalancing:us-east-1:306616136846:listener/app/nikhil-alb/447213bd5cc7bbd0/86dac35f0e241b65"
+listener_arn = "arn:aws:elasticloadbalancing:us-east-1:306616136846:listener/app/nikhil-alb/45ac8585310822cf/b39bd7b4c69e5506"
 
 task_execution_role_arn = "arn:aws:iam::306616136846:role/ecsSharedRole"
 task_role_arn           = "arn:aws:iam::306616136846:role/ecsSharedRole"
